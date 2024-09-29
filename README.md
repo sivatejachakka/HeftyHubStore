@@ -10,3 +10,5 @@ User Registration for different users(Admin, Customers)
 User Authentications and Autherizations
 Two-Factory Authentication with Facebook
 Notify Customers for the products shipping status
+
+Please see the source code in my github personal repository or visit the project itself live.
