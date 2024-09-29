@@ -11,5 +11,4 @@ The online course taught us on how to implement most common design pattern such 
 - **Two-Factor Authentication**: Integrates with Facebook for enhanced security.
 - **Shipping Notifications**: Notifies customers about the status of their product shipments.
 
-Please see the source code in my github personal repository or visit the project itself live.
-For more details, you can check the source code in my [GitHub repository]((https://github.com/sivatejachakka/HeftyHubStore)) or visit the [live project](your-live-link).
+For more details, you can check the source code in my [GitHub repository](https://github.com/sivatejachakka/HeftyHubStore) or visit the [live project](your-live-link).
