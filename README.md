@@ -6,9 +6,9 @@ The online course taught us on how to implement most common design pattern such 
 
 Main features/functionality of the web application as follows:
 
-User Registration for different users(Admin, Customers)
-User Authentications and Autherizations
-Two-Factory Authentication with Facebook
-Notify Customers for the products shipping status
+User Registration for different users(Admin, Customers)__
+User Authentications and Autherizations__
+Two-Factory Authentication with Facebook__
+Notify Customers for the products shipping status__
 
 Please see the source code in my github personal repository or visit the project itself live.
