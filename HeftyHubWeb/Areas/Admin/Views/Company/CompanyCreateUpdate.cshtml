@@ -1,0 +1,85 @@
+﻿@model Company
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">@(Model == null ? "Create" : "Edit") Company</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row">
+            @* ASP.NET Core MVC binds form inputs to the action method parameters. If the CompanyId is not present in the form,
+            the model binder will not be able to set the CompanyId property in your ViewModel when the form is submitted.
+            So on click of Update the CompanyId will be passed as 0. On the other hand if the property name in the mode is Id,
+            no need to have th hidden field it will directly update the have the model value binded *@
+            @if (Model != null)
+            {
+                <input type="hidden" asp-for="CompanyId" />
+            }
+
+            <div class="border p-3" >
+                @* <div asp-validation-summary="ModelOnly"></div> *@
+
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Name" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                    <label asp-for=Name class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="StreetAddress" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                    <label asp-for=StreetAddress class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                    <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="City" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                    <label asp-for=City class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="State" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                    <label asp-for=State class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="PostalCode" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                    <label asp-for=PostalCode class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                    <span asp-validation-for="PostalCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="PhoneNumber" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                    <label asp-for=PhoneNumber class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="row pt-4">
+                    @* col-md-3 defines if the screen is medium or large it will take 3 columns *@
+                    <div class="col-6 col-md-3">
+                        @* submit type calls the action method with the view name which is inside the controller with the name of view folder name and send the model by default *@
+                        <button type="submit" class="btn btn-primary form-control">@(Model == null ? "Create" : "Update")</button>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Company" asp-action="Index" class="btn btn-outline-primary border form-control">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@* Client Side Validation *@
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

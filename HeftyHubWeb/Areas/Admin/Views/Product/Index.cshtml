@@ -1,0 +1,72 @@
+﻿@model List<Product>
+
+@* @if (TempData["success"] != null)
+{
+    <h2>@TempData["success"]</h2>
+} *@
+
+@* <partial name="_Notification" /> *@
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> Product List </h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        @* In bootstrap if we use row class, that row consists of 12 columns, in that we seperated into 6 columns each *@
+        <div class="row pb-3">
+            @* instead of having the below div which makes the secondnd div at last 6 cols, we can use offsets to skip the first 6 cols *@
+            @* <div class="col-6">
+            </div> *@
+            @* offset-md-6: Offsets (or skips) the first 6 columns, effectively placing the content in the last 6 columns of the row. *@
+            <div class="col-6 offset-md-6 text-end">
+                @* as the file is under Product View, so it means it is ProductController, so no need to explicitly mention the
+                asp-controller tag helper. But mentioning would increase readability. *@
+                <a asp-controller="Product" asp-action="ProductCreateUpdate" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Create New Product
+                </a>
+            </div>
+        </div>
+        <table id="productDataTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Price</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td>@obj.Title</td>
+                        <td>@obj.ISBN</td>
+                        <td>@obj.Price</td>
+                        <td>@obj.Author</td>
+                        <td>@obj.Category.Name</td>
+                        <td>
+                            <div class="w-100 btn-group" role="group">
+                                <a asp-controller="Product" asp-action="ProductCreateUpdate" asp-route-id="@obj.ProductId" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a asp-controller="Product" asp-action="DeleteProduct" asp-route-id="@obj.ProductId" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash3-fill"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}

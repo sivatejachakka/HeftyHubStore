@@ -1,0 +1,154 @@
+﻿@model ProductVM
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">@(Model.Product == null ? "Create" : "Edit") Product</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        @* without enctype="multipart/form-data", file upload will not work *@
+        <form method="post" class="row" enctype="multipart/form-data">
+            @* ASP.NET Core MVC binds form inputs to the action method parameters. If the ProductId is not present in the form,
+            the model binder will not be able to set the ProductId property in your ViewModel when the form is submitted.
+            So on click of Update the ProductId will be passed as 0. On the other hand if the property name in the mode is Id,
+            no need to have th hidden field it will directly update the have the model value binded *@
+            @if (Model.Product != null)
+            {
+                <input asp-for="Product.ProductId" hidden />
+                <input asp-for="Product.ImageUrl" hidden />
+            }
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+                        @* <div asp-validation-summary="ModelOnly"></div> *@
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Title" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Title class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <span asp-validation-for="Product.Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="py-2 col-12">
+                            <label asp-for=Product.Description class="ms-2 text-muted" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <textarea asp-for="Product.Description" class="form-control border-0 shadow"></textarea> @* form-control to give it the full width *@
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.ISBN" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.ISBN class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <span asp-validation-for="Product.ISBN" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Author" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Author class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <span asp-validation-for="Product.Author" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.ListPrice" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.ListPrice class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Price" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Price class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <span asp-validation-for="Product.Price" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Price50" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Price50 class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <span asp-validation-for="Product.Price50" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Price100" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Price100 class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <span asp-validation-for="Product.Price100" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            @* Using ViewBag *@
+                            @* <select asp-for="Product.CategoryId" asp-items="ViewBag.CategoryList" class="form-control border-0 shadow">
+                            <option disabled selected>--Select Category--</option>
+                            </select> *@
+                            @* Using ViewData *@
+                            @* <select asp-for="Product.CategoryId" asp-items="@(ViewData["CategoryList"] as IEnumerable<SelectListItem>)" class="form-select border-0 shadow">
+                            <option disabled selected>--Select Category--</option>
+                            </select> *@
+                            <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow">
+                                <option disabled selected>--Select Category--</option>
+                            </select>
+                            <label asp-for=Product.CategoryId class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input type="file" name="imgFile" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.ImageUrl class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="row pt-4">
+                            @* col-md-3 defines if the screen is medium or large it will take 3 columns *@
+                            <div class="col-6 col-md-3">
+                                @* submit type calls the action method with the view name which is inside the controller with the name of view folder name and send the model by default *@
+                                @if (Model.Product == null)
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                }
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary border form-control">
+                                    Back to List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <img src="@Model.Product?.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+
+@* Client Side Validation *@
+@section Scripts{
+    <script>
+        tinymce.init({
+          selector: 'textarea',
+          plugins: [
+            // Core editing features
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+            // Your account includes a free trial of TinyMCE premium features
+            // Try the most popular premium features until Nov 7, 2024:
+            'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
+          ],
+          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+          tinycomments_mode: 'embedded',
+          tinycomments_author: 'Author name',
+          mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+          ],
+          ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+        });
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

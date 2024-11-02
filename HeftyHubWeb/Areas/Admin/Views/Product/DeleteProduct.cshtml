@@ -1,0 +1,108 @@
+﻿@model ProductVM
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Delete Product</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row">
+            @* ASP.NET Core MVC binds form inputs to the action method parameters. If the ProductId is not present in the form,
+            the model binder will not be able to set the ProductId property in your ViewModel when the form is submitted.
+            So on click of Update the ProductId will be passed as 0. On the other hand if the property name in the mode is Id,
+            no need to have th hidden field it will directly update the have the model value binded *@
+            @if (Model.Product != null)
+            {
+                <input type="hidden" asp-for="Product.ProductId" />
+            }
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+                        @* <div asp-validation-summary="ModelOnly"></div> *@
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Title" disabled class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Title class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <textarea asp-for="Product.Description" disabled class="form-control border-0 shadow"></textarea> @* form-control to give it the full width *@
+                            <label asp-for=Product.Description class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.ISBN" disabled class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.ISBN class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Author" disabled class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Author class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.ListPrice" disabled class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.ListPrice class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Price" disabled class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Price class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Price50" disabled class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Price50 class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Product.Price100" disabled class="form-control border-0 shadow" /> @* form-control to give it the full width *@
+                            <label asp-for=Product.Price100 class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            @* Using ViewBag *@
+                            @* <select asp-for="Product.CategoryId" asp-items="ViewBag.CategoryList" class="form-control border-0 shadow">
+                            <option disabled selected>--Select Category--</option>
+                            </select> *@
+                            @* Using ViewData *@
+                            @* <select asp-for="Product.CategoryId" asp-items="@(ViewData["CategoryList"] as IEnumerable<SelectListItem>)" class="form-select border-0 shadow">
+                            <option disabled selected>--Select Category--</option>
+                            </select> *@
+                            <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow" disabled>
+                                <option disabled selected>--Select Category--</option>
+                            </select>
+                            <label asp-for=Product.CategoryId class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="form-floating py-2 col-12">
+                            <input type="file" name="imgFile" class="form-control border-0 shadow" disabled /> @* form-control to give it the full width *@
+                            <label asp-for=Product.ImageUrl class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                        </div>
+
+                        <div class="row pt-4">
+                            @* col-md-3 defines if the screen is medium or large it will take 3 columns *@
+                            <div class="col-6 col-md-3">
+                                @* submit type calls the action method with the view name which is inside the controller with the name of view folder name and send the model by default *@
+                                <button type="submit" class="btn btn-danger form-control">Delete</button>
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary border form-control">
+                                    Back to List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <img src="@Model.Product?.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
