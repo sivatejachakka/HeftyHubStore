@@ -12,12 +12,24 @@
     <link rel="stylesheet" href="~/HeftyHubWeb.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    @* <link href='https://fonts.googleapis.com/css?family=Dancing Script' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'> *@
+    <link href='https://fonts.googleapis.com/css?family=Bungee Tint' rel='stylesheet'>
+    @* <link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Sarpanch' rel='stylesheet'> *@
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HeftyHub</a>
+                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    HeftyHub
+                </a> *@
+                @* <img src="/images/logo.png" alt="HeftyHub Logo" style="height:auto; width:50px; padding-right: 1rem;" /> *@
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <h1 style="font-family: 'Bungee Tint'; display: inline;">HeftyHub</h1>
+                    @* HeftyHub *@
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -92,11 +104,11 @@
 
     <footer class="border-top footer bg-primary text-muted">
         <div class="container-fluid d-flex align-items-center" style="padding: 0 15%; max-width: 100%;">
-            <span style="margin-right: auto;">
+            <span style="margin-right: auto; color:burlywood">
                 &copy; 2024 - HeftyHub <i class="bi bi-badge-tm"></i>
             </span>
             <div class="flex-grow-1" style="max-width: 60%;"></div>
-            <span>
+            <span style="color:burlywood">
                 Made with <i class="bi bi-heart-fill"></i> by HeftyHub
             </span>
         </div>
