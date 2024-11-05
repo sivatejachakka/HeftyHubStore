@@ -77,9 +77,9 @@ namespace HeftyHub.DataAccess.DbInitializer
                 }, "HeftyHub@123").GetAwaiter().GetResult();
 
                 ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@heftyhub.com");
-                _userManager.AddToRoleAsync(user, Constants.ROLE_USER_ADMIN);
+                _userManager.AddToRoleAsync(user, Constants.ROLE_USER_ADMIN).GetAwaiter().GetResult();
                 user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "sivateja1213@gmail.com");
-                _userManager.AddToRoleAsync(user, Constants.ROLE_USER_ADMIN);
+                _userManager.AddToRoleAsync(user, Constants.ROLE_USER_ADMIN).GetAwaiter().GetResult();
             }
             if (!_roleManager.RoleExistsAsync(Constants.ROLE_USER_COMPANY).GetAwaiter().GetResult())
             {

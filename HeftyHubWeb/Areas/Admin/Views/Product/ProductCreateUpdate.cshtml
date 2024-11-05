@@ -18,7 +18,6 @@
             @if (Model.Product != null)
             {
                 <input asp-for="Product.ProductId" hidden />
-                <input asp-for="Product.ImageUrl" hidden />
             }
             <div class="row">
                 <div class="col-10">
@@ -89,8 +88,8 @@
                         </div>
 
                         <div class="form-floating py-2 col-12">
-                            <input type="file" name="imgFile" class="form-control border-0 shadow" /> @* form-control to give it the full width *@
-                            <label asp-for=Product.ImageUrl class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
+                            <input type="file" name="imgFiles" class="form-control border-0 shadow" multiple /> @* form-control to give it the full width *@
+                            <label asp-for=Product.ProductImages class="ms-2" style="font-weight: bold; text-decoration: underline; color:black;"></label>
                         </div>
 
                         <div class="row pt-4">
@@ -116,7 +115,18 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <img src="@Model.Product?.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                    @if(Model.Product?.ProductImages != null)
+                    {
+                        foreach(var image in Model.Product.ProductImages)
+                        {
+                            <div class="border p-1 m-2 text-center">
+                                <img src="@image.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                                <a asp-action="DeleteImage" class="btn btn-danger" asp-route-imageId="@image.Id">
+                                    <i class="bi bi-trash-fill"></i>Delete
+                                </a>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
             

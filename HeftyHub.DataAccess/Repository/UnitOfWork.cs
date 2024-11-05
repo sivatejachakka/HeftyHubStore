@@ -12,6 +12,7 @@ namespace HeftyHub.DataAccess.Repository
     {
         public ICategoryRepository _CategoryRepository { get; private set; }
         public IProductRepository _ProductRepository { get; private set; }
+        public IProductImageRepository _ProductImageRepository { get; private set; }
         public ICompanyRepository _CompanyRepository { get; private set; }
         public IShoppingCartRepository _ShoppingCartRepository { get; private set; }
         public IApplicationUserRepository _ApplicationUserRepository { get; private set; }
@@ -25,6 +26,7 @@ namespace HeftyHub.DataAccess.Repository
             _db = db;
             _CategoryRepository = new CategoryRepository(_db);
             _ProductRepository = new ProductRepository(_db);
+            _ProductImageRepository = new ProductImageRepository(_db);
             _CompanyRepository = new CompanyRepository(_db);
             _ShoppingCartRepository = new ShoppingCartRepository(_db);
             _ApplicationUserRepository = new ApplicationUserRepository(_db);

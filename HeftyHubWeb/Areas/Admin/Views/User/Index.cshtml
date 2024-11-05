@@ -1,0 +1,74 @@
+﻿@model List<ApplicationUser>
+@* @if (TempData["success"] != null)
+{
+    <h2>@TempData["success"]</h2>
+} *@
+
+@* <partial name="_Notification" /> *@
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> User List </h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <table id="productDataTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td>@obj.Name</td>
+                        <td>@obj.Email</td>
+                        <td>@obj.PhoneNumber</td>
+                        <td>@obj.Company.Name</td>
+                        <td>@obj.Role</td>
+                        <td>
+                            <div class="w-100 btn-group" role="group">
+                                @* <a asp-controller="User" asp-action="LockUnlock" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                    @if (obj.LockoutEnd != null && obj.LockoutEnd > DateTime.Now)
+                                    {
+                                        
+                                        <span>Unlock</span>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-unlock-fill"></i>
+                                        <span>Lock</span>
+                                    }
+                                </a> *@
+                                @if (obj.LockoutEnd != null && obj.LockoutEnd > DateTime.Now)
+                                {
+                                    <a asp-controller="User" asp-action="LockUnlock" asp-route-id="@obj.Id" class="btn btn-danger text-white mx-2" style="cursor:pointer;">
+                                        <i class="bi bi-lock-fill"></i>  Unlock
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="User" asp-action="LockUnlock" asp-route-id="@obj.Id" class="btn btn-success text-white mx-2" style="cursor:pointer;">
+                                        <i class="bi bi-unlock-fill"></i>  Lock
+                                    </a>
+                                }
+                                <a asp-controller="User" asp-action="RoleManagement" asp-route-userId="@obj.Id" class="btn btn-danger text-white mx-2" style="cursor:pointer;">
+                                        <i class="bi bi-pencil-square"></i> Permission
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

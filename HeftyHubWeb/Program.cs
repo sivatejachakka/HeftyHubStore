@@ -51,6 +51,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+//for adding pending migrations and create an admin user by default
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 var app = builder.Build();
 
@@ -75,6 +77,7 @@ app.UseAuthorization();
 // also have to add session in our request pipeline and with this the application is configured now to use session
 app.UseSession();
 
+//for adding pending migrations and create an admin user by default
 SeedDatabase();
 
 // As Identity is implemented in Razor pages
@@ -86,6 +89,7 @@ app.MapControllerRoute(
 
 app.Run();
 
+//for adding pending migrations and create an admin user by default
 void SeedDatabase()
 {
     using (var scope = app.Services.CreateScope())

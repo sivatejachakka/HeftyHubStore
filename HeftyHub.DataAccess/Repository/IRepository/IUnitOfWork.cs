@@ -10,6 +10,7 @@ namespace HeftyHub.DataAccess.Repository.IRepository
     {
         ICategoryRepository _CategoryRepository { get; }
         IProductRepository _ProductRepository { get; }
+        IProductImageRepository _ProductImageRepository { get; }
         ICompanyRepository _CompanyRepository { get; }
         IShoppingCartRepository _ShoppingCartRepository { get; }
         IApplicationUserRepository _ApplicationUserRepository { get; }

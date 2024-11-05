@@ -13,6 +13,7 @@ namespace HeftyHub.DataAccess.Data
         }
         public DbSet<Category> tblCategory {  get; set; }
         public DbSet<Product> tblProduct {  get; set; }
+        public DbSet<ProductImage> tblProductImages {  get; set; }
         public DbSet<ApplicationUser> ApplicationUsers {  get; set; }
         public DbSet<Company> tblCompany {  get; set; }
         public DbSet<ShoppingCart> tblShoppingCart {  get; set; }
@@ -26,7 +27,10 @@ namespace HeftyHub.DataAccess.Data
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryId=1, Name="Action", DisplayOrder=1},
                 new Category { CategoryId=2, Name="SciFi", DisplayOrder=2},
-                new Category { CategoryId=3, Name="History", DisplayOrder=3}
+                new Category { CategoryId=3, Name="History", DisplayOrder=3},
+                new Category { CategoryId=4, Name= "Drama", DisplayOrder=4},
+                new Category { CategoryId=5, Name= "Comedy", DisplayOrder=5},
+                new Category { CategoryId=6, Name= "Adventure", DisplayOrder=6}
             );
 
             modelBuilder.Entity<Product>().HasData(
@@ -41,8 +45,7 @@ namespace HeftyHub.DataAccess.Data
                     Price = 90,
                     Price50 = 85,
                     Price100 = 80,
-                    CategoryId = 2,
-                    ImageUrl = ""
+                    CategoryId = 2
                 },
                 new Product
                 {
@@ -55,8 +58,7 @@ namespace HeftyHub.DataAccess.Data
                     Price = 30,
                     Price50 = 25,
                     Price100 = 20,
-                    CategoryId = 3,
-                    ImageUrl = ""
+                    CategoryId = 3
                 },
                 new Product
                 {
@@ -69,8 +71,7 @@ namespace HeftyHub.DataAccess.Data
                     Price = 50,
                     Price50 = 40,
                     Price100 = 35,
-                    CategoryId = 1,
-                    ImageUrl = ""
+                    CategoryId = 1
                 },
                 new Product
                 {
@@ -83,8 +84,7 @@ namespace HeftyHub.DataAccess.Data
                     Price = 65,
                     Price50 = 60,
                     Price100 = 55,
-                    CategoryId = 5,
-                    ImageUrl = ""
+                    CategoryId = 5
                 },
                 new Product
                 {
@@ -97,8 +97,7 @@ namespace HeftyHub.DataAccess.Data
                     Price = 27,
                     Price50 = 25,
                     Price100 = 20,
-                    CategoryId = 6,
-                    ImageUrl = ""
+                    CategoryId = 6
                 },
                 new Product
                 {
@@ -111,8 +110,7 @@ namespace HeftyHub.DataAccess.Data
                     Price = 23,
                     Price50 = 22,
                     Price100 = 20,
-                    CategoryId = 4,
-                    ImageUrl = ""
+                    CategoryId = 4
                 }
             );
         }

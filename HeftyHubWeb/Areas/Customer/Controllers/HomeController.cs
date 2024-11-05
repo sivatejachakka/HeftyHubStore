@@ -31,7 +31,7 @@ namespace HeftyHubWeb.Areas.Customer.Controllers
             //    HttpContext.Session.SetInt32(Constants.SESSION_CART, _unitOfWorkRepository._ShoppingCartRepository.GetAll(u => u.ApplicationUserId == claim.Value).Count());
             //}
 
-            IEnumerable<Product> productList = _unitOfWorkRepository._ProductRepository.GetAll(includeProperties: "Category");
+            IEnumerable<Product> productList = _unitOfWorkRepository._ProductRepository.GetAll(includeProperties: "Category,ProductImages");
             return View(productList);
         }
 
@@ -39,7 +39,7 @@ namespace HeftyHubWeb.Areas.Customer.Controllers
         {
             ShoppingCart cart = new()
             {
-                Product = _unitOfWorkRepository._ProductRepository.Get(u => u.ProductId == productId, includeProperties: "Category"),
+                Product = _unitOfWorkRepository._ProductRepository.Get(u => u.ProductId == productId, includeProperties: "Category,ProductImages"),
                 Count = 1,
                 ProductId = productId
             };

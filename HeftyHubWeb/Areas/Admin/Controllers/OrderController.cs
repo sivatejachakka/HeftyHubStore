@@ -43,7 +43,7 @@ namespace HeftyHubWeb.Areas.Admin.Controllers
                 OrderHeaderList = _unitOfWork._OrderHeaderRepository.GetAll(u => u.ApplicationUserId == userId, includeProperties: "ApplicationUser").ToList();
             }
 
-                switch (status)
+            switch (status)
             { 
                 case "pending":
                     OrderHeaderList = OrderHeaderList.Where(u => u.PaymentStatus == Constants.PAYMENT_STATUS_DELAYED_PAYMENT).ToList();

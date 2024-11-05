@@ -48,7 +48,7 @@ namespace HeftyHubWeb.Areas.Admin.Controllers
 
             if (id != null)
             {
-                productVM.Product = _unitOfWorkRepository._ProductRepository.Get(u => u.ProductId == id); ;
+                productVM.Product = _unitOfWorkRepository._ProductRepository.Get(u => u.ProductId == id, includeProperties: "ProductImages");
 
                 if (productVM.Product == null)
                 {
@@ -61,31 +61,10 @@ namespace HeftyHubWeb.Areas.Admin.Controllers
 
         // As we are using ProjectVM so the combined model will be returned here where we have POST request, as the view has ProductVM model.
         [HttpPost]
-        public IActionResult ProductCreateUpdate(ProductVM obj, IFormFile? imgFile)
+        public IActionResult ProductCreateUpdate(ProductVM obj, List<IFormFile> imgFiles)
         {
             if (ModelState.IsValid)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (imgFile != null) {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imgFile.FileName);
-                    string productPath = Path.Combine(wwwRootPath, "images\\product");
-
-                    if (!string.IsNullOrEmpty(obj.Product.ImageUrl))
-                    {
-                        // delete the old image
-                        var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
-
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-                    }
-
-                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create)) {
-                        imgFile.CopyTo(fileStream);
-                    }
-                    obj.Product.ImageUrl = @"\images\product\" + fileName;
-                }
                 if (obj.Product.ProductId == 0)
                 {
                     _unitOfWorkRepository._ProductRepository.Add(obj.Product);
@@ -97,6 +76,41 @@ namespace HeftyHubWeb.Areas.Admin.Controllers
                     TempData["success"] = "Product Updated Successfully.";
                 }
                 _unitOfWorkRepository.Save();
+
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (imgFiles != null) {
+                    foreach(IFormFile imgFile in imgFiles)
+                    {
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imgFile.FileName);
+                        string productPath = @"images\products\product-" + obj.Product.ProductId;
+                        string finalPath = Path.Combine(wwwRootPath, productPath);
+
+                        if (!Directory.Exists(finalPath))
+                        {
+                            Directory.CreateDirectory(finalPath);
+                        }
+
+                        using (var fileStream = new FileStream(Path.Combine(finalPath, fileName), FileMode.Create))
+                        {
+                            imgFile.CopyTo(fileStream);
+                        }
+
+                        ProductImage productImage = new ProductImage()
+                        {
+                            ImageUrl = @"\"+productPath+@"\"+fileName,
+                            ProductId = obj.Product.ProductId,
+                        };
+
+                        if(obj.Product.ProductImages == null)
+                        {
+                            obj.Product.ProductImages = new List<ProductImage>();
+                        }
+
+                        obj.Product.ProductImages.Add(productImage);
+                    }
+                    _unitOfWorkRepository._ProductRepository.Update(obj.Product);
+                    _unitOfWorkRepository.Save();
+                }
 
                 // to redirect it to another controller we have to pass the controller name as 2nd parameter RedirectToAction("ActionName", "ControllerName);
                 return RedirectToAction("Index");
@@ -120,7 +134,7 @@ namespace HeftyHubWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Product? product = _unitOfWorkRepository._ProductRepository.Get(u => u.ProductId == id);
+            Product? product = _unitOfWorkRepository._ProductRepository.Get(u => u.ProductId == id, includeProperties: "ProductImages");
 
             if (product == null)
             {
@@ -155,12 +169,18 @@ namespace HeftyHubWeb.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            // delete the old image
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\'));
+            // delete the the images and folder
+            string productPath = @"images\products\product-" + id;
+            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
 
-            if (System.IO.File.Exists(oldImagePath))
+            if (Directory.Exists(finalPath))
             {
-                System.IO.File.Delete(oldImagePath);
+                string[] filePaths = Directory.GetFiles(finalPath);
+                foreach(string filepath in filePaths)
+                {
+                    System.IO.File.Delete(filepath);
+                }
+                Directory.Delete(finalPath);
             }
 
             _unitOfWorkRepository._ProductRepository.Remove(product);
@@ -169,6 +189,31 @@ namespace HeftyHubWeb.Areas.Admin.Controllers
             TempData["success"] = "Product Deleted Successfully.";
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteImage(int imageId)
+        {
+            var imageToBeDeleted = _unitOfWorkRepository._ProductImageRepository.Get(u => u.Id == imageId);
+            if(imageToBeDeleted != null)
+            {
+                if (!string.IsNullOrEmpty(imageToBeDeleted.ImageUrl))
+                {
+                    //delete the old image
+                    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, imageToBeDeleted.ImageUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                _unitOfWorkRepository._ProductImageRepository.Remove(imageToBeDeleted);
+                _unitOfWorkRepository.Save();
+
+                TempData["success"] = "Image Deleted Successfully.";
+            }
+
+            return RedirectToAction(nameof(ProductCreateUpdate), new { id = imageToBeDeleted.ProductId });
         }
 
         //#region API CALLS
